@@ -1,6 +1,8 @@
 using AutoMapper;
 using LMS.Services.StudentAPI;
 using LMS.Services.StudentAPI.Data;
+using LMS.Services.StudentAPI.Services;
+using LMS.Services.StudentAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,13 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+// adding Services lifetime
+builder.Services.AddScoped<IGroupService, GroupService>();
+
+// Group and Student connection
+builder.Services.AddHttpClient("Group", u => u.BaseAddress =
+new Uri(builder.Configuration["ServiceUrls:GroupAPI"]));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

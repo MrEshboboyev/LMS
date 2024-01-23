@@ -2,6 +2,7 @@
 using LMS.Services.StudentAPI.Data;
 using LMS.Services.StudentAPI.Models;
 using LMS.Services.StudentAPI.Models.Dto;
+using LMS.Services.StudentAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Services.StudentAPI.Controllers
@@ -11,13 +12,16 @@ namespace LMS.Services.StudentAPI.Controllers
     public class StudentAPIController : ControllerBase
     {
         private AppDbContext _db;
+        private readonly IGroupService _groupService;
         private IMapper _mapper;
         private ResponseDto _response;
         public StudentAPIController(AppDbContext db,
-            IMapper mapper)
+            IMapper mapper,
+            IGroupService groupService)
         {
             _db = db;
             _mapper = mapper;
+            _groupService = groupService;
             _response = new ResponseDto();
         }
 
@@ -42,11 +46,16 @@ namespace LMS.Services.StudentAPI.Controllers
         // Get By Id Of Entity (Student)
         [HttpGet]
         [Route("{id:int}")]
-        public ResponseDto Get(int id)
+        public async Task<ResponseDto> Get(int id)
         {
             try
             {
                 Student obj = _db.Students.Find(id);
+
+                IEnumerable<GroupDto> groups = await _groupService.GetGroupsAsync();
+
+                obj.Group = groups.FirstOrDefault(gr => gr.GroupId == obj.GroupId);
+
                 _response.Result = _mapper.Map<StudentDto>(obj);
             }
             catch (Exception ex)
@@ -132,6 +141,56 @@ namespace LMS.Services.StudentAPI.Controllers
                 _db.SaveChanges();
 
                 _response.Result = true;
+            }
+            catch (Exception ex)
+            {
+                _response.Message = ex.Message;
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        // Get Students by groupId
+        [HttpGet]
+        [Route("GetStudentsByGroupId/{groupId}")]
+        public ResponseDto GetStudentsByGroupId(int groupId)
+        {
+            try
+            {
+                IEnumerable<Student> students = _db.Students.Where(std => std.GroupId == groupId).ToList();
+
+                _response.Result = students;
+            }
+            catch (Exception ex)
+            {
+                _response.Message = ex.Message;
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        // Get Students by groupName
+        [HttpGet]
+        [Route("GetStudentsByGroupName/{groupName}")]
+        public async Task<ResponseDto> GetStudentsByGroupName(string groupName)
+        {
+            try
+            {
+                IEnumerable<GroupDto> groups = await _groupService.GetGroupsAsync();
+
+                // find group
+                GroupDto group = groups.FirstOrDefault(gr => gr.Name == groupName);
+
+                IEnumerable<Student> students = _db.Students.Where(std => std.GroupId == group.GroupId).ToList();
+
+                foreach(var std in  students)
+                {
+                    std.Group = group;
+                }
+
+                _response.Result = students;
             }
             catch (Exception ex)
             {
