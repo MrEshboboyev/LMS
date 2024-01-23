@@ -1,0 +1,6 @@
+@LMS.Services.StudentAPI_HostAddress = http://localhost:5280
+
+GET {{LMS.Services.StudentAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
