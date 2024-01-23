@@ -1,7 +1,26 @@
+using LMS.Web.Services;
+using LMS.Web.Services.IServices;
+using LMS.Web.Utility;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// add HttpClient, HttpContext
+builder.Services.AddHttpClient();
+builder.Services.AddHttpContextAccessor();
+
+// add HttpClient for Services
+builder.Services.AddHttpClient<IBaseService, BaseService>();    
+builder.Services.AddHttpClient<IGroupService, GroupService>();    
+
+// add service lifetime
+builder.Services.AddScoped<IBaseService, BaseService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+
+// SD Urls populated
+SD.GroupAPIBase = builder.Configuration["ServiceUrls:GroupAPI"];
 
 var app = builder.Build();
 
