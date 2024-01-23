@@ -4,6 +4,7 @@
     {
         // URLs for API
         public static string GroupAPIBase {  get; set; }
+        public static string StudentAPIBase {  get; set; }
 
         public enum ApiType
         {

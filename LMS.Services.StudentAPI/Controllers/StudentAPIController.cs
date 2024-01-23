@@ -27,11 +27,18 @@ namespace LMS.Services.StudentAPI.Controllers
 
         // Get All Entities (Students)
         [HttpGet]
-        public ResponseDto Get()
+        public async Task<ResponseDto> Get()
         {
             try
             {
                 IEnumerable<Student> objList = _db.Students.ToList();
+
+                IEnumerable<GroupDto> groups = await _groupService.GetGroupsAsync();
+                foreach(var obj in objList)
+                {
+                    obj.Group = groups.FirstOrDefault(gr => gr.GroupId == obj.GroupId);
+                }
+
                 _response.Result = _mapper.Map<IEnumerable<StudentDto>>(objList);
             }
             catch (Exception ex)

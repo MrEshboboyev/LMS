@@ -14,13 +14,16 @@ builder.Services.AddHttpContextAccessor();
 // add HttpClient for Services
 builder.Services.AddHttpClient<IBaseService, BaseService>();    
 builder.Services.AddHttpClient<IGroupService, GroupService>();    
+builder.Services.AddHttpClient<IStudentService, StudentService>();    
 
 // add service lifetime
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 // SD Urls populated
 SD.GroupAPIBase = builder.Configuration["ServiceUrls:GroupAPI"];
+SD.StudentAPIBase = builder.Configuration["ServiceUrls:StudentAPI"];
 
 var app = builder.Build();
 
