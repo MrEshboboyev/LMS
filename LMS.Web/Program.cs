@@ -15,15 +15,18 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<IBaseService, BaseService>();    
 builder.Services.AddHttpClient<IGroupService, GroupService>();    
 builder.Services.AddHttpClient<IStudentService, StudentService>();    
+builder.Services.AddHttpClient<ISubjectService, SubjectService>();    
 
 // add service lifetime
 builder.Services.AddScoped<IBaseService, BaseService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 
 // SD Urls populated
 SD.GroupAPIBase = builder.Configuration["ServiceUrls:GroupAPI"];
 SD.StudentAPIBase = builder.Configuration["ServiceUrls:StudentAPI"];
+SD.SubjectAPIBase = builder.Configuration["ServiceUrls:SubjectAPI"];
 
 var app = builder.Build();
 

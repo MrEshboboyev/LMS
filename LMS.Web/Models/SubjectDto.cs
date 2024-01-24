@@ -1,4 +1,4 @@
-﻿namespace LMS.Services.SubjectAPI.Models.Dto
+﻿namespace LMS.Web.Models
 {
     public class SubjectDto
     {
