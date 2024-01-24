@@ -1,0 +1,6 @@
+@LMS.Services.Shared_HostAddress = http://localhost:5219
+
+GET {{LMS.Services.Shared_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
