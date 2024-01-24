@@ -7,7 +7,7 @@ namespace LMS.Web.Services.IServices
         Task<ResponseDto?> GetStudentAsync(string studentName);
         Task<ResponseDto?> GetAllStudentsAsync();
         Task<ResponseDto?> GetStudentByIdAsync(int id);
-        Task<ResponseDto?> GetStudentsByGroupName(string groupName);
+        Task<ResponseDto?> GetStudentsByGroupNameAsync(string groupName);
         Task<ResponseDto?> CreateStudentAsync(StudentDto studentDto);
         Task<ResponseDto?> UpdateStudentAsync(StudentDto studentDto);
         Task<ResponseDto?> DeleteStudentAsync(int id);

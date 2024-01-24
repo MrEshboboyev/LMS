@@ -178,17 +178,17 @@ namespace LMS.Web.Controllers
             else
             {
 
-                _response = await _studentService.GetStudentsByGroupName(groupName);
+                _response = await _studentService.GetStudentsByGroupNameAsync(groupName);
                 if (_response != null && _response.IsSuccess)
                 {
                     students = JsonConvert.DeserializeObject<List<StudentDto>>(Convert.ToString(_response.Result));
-                    ViewData["GroupName"] = groupName;
                 }
                 else
                 {
-                    TempData["error"] = _response.Message;
+                    TempData["error"] = "Not Found";
                 }
             }
+            ViewData["GroupName"] = groupName;
 
             return View("StudentIndex", students);
         }

@@ -61,6 +61,8 @@ namespace LMS.Web.Services
                 {
                     case HttpStatusCode.NotFound:
                         return new() { IsSuccess = false, Message = "Not Found" };
+                    case HttpStatusCode.BadRequest:
+                        return new() { IsSuccess = false, Message = "Bad Request" };
                     case HttpStatusCode.Unauthorized:
                         return new() { IsSuccess = false, Message = "Unauthorized" };
                     case HttpStatusCode.Forbidden:

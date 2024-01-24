@@ -25,7 +25,8 @@ namespace LMS.Services.StudentAPI.Controllers
             _response = new ResponseDto();
         }
 
-        // Get All Entities (Students)
+        #region Get All Entities (Students)
+
         [HttpGet]
         public async Task<ResponseDto> Get()
         {
@@ -34,7 +35,7 @@ namespace LMS.Services.StudentAPI.Controllers
                 IEnumerable<Student> objList = _db.Students.ToList();
 
                 IEnumerable<GroupDto> groups = await _groupService.GetGroupsAsync();
-                foreach(var obj in objList)
+                foreach (var obj in objList)
                 {
                     obj.Group = groups.FirstOrDefault(gr => gr.GroupId == obj.GroupId);
                 }
@@ -50,7 +51,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Get By Id Of Entity (Student)
+        #endregion
+
+        #region Get By Id Of Entity (Student)
+
         [HttpGet]
         [Route("{id:int}")]
         public async Task<ResponseDto> Get(int id)
@@ -74,8 +78,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
+        #endregion 
 
-        // Get By Name Of Entity (Student)
+        #region Get By Name Of Entity (Student)
+
         [HttpGet]
         [Route("GetByName/{name}")]
         public ResponseDto Get(string name)
@@ -94,7 +100,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Creating Entity (Student)
+        #endregion 
+
+        #region Creating Entity (Student)
+
         [HttpPost]
         public ResponseDto Post([FromBody] StudentDto studentDto)
         {
@@ -115,7 +124,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Updating Entity (Student)
+        #endregion
+
+        #region Updating Entity (Student)
+
         [HttpPut]
         public ResponseDto Put([FromBody] StudentDto studentDto)
         {
@@ -136,7 +148,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Deleting Entity (Student)
+        #endregion 
+
+        #region Deleting Entity (Student)
+
         [HttpDelete]
         [Route("{id:int}")]
         public ResponseDto Delete(int id)
@@ -158,7 +173,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Get Students by groupId
+        #endregion
+
+        #region Get Students by groupId
+
         [HttpGet]
         [Route("GetStudentsByGroupId/{groupId}")]
         public ResponseDto GetStudentsByGroupId(int groupId)
@@ -178,7 +196,10 @@ namespace LMS.Services.StudentAPI.Controllers
             return _response;
         }
 
-        // Get Students by groupName
+        #endregion 
+
+        #region Get Students by groupName
+        
         [HttpGet]
         [Route("GetStudentsByGroupName/{groupName}")]
         public async Task<ResponseDto> GetStudentsByGroupName(string groupName)
@@ -207,5 +228,7 @@ namespace LMS.Services.StudentAPI.Controllers
 
             return _response;
         }
+
+        #endregion 
     }
 }

@@ -1,0 +1,76 @@
+﻿@model IEnumerable<StudentDto>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Students List of @ViewBag.Group.Name</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="d-flex align-items-end justify-content-between">
+                <a asp-action="GroupAddStudent" asp-route-id="@ViewBag.Group.GroupId" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Student</a>
+            </div>
+        </div>
+        @if (Model.ToList().Any())
+        {
+
+            <table class="table table-bordered table-hover table-primary">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-list"></i> Name</th>
+                        <th><i class="fas fa-list"></i> Group</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var group in Model)
+                    {
+                        <tr>
+                            <td>@group.Name</td>
+                            <td>@group.Group.Name</td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" asp-action="StudentDelete" asp-controller="Student" asp-route-id="@group.StudentId">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                                <a class="btn btn-primary btn-sm mr-2" asp-action="StudentEdit" asp-controller="Student" asp-route-id="@group.StudentId">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>Not students yet</p>
+        }
+
+        <div class="row pb-3">
+            <div class="d-flex align-items-end justify-content-between">
+                <a asp-action="GroupIndex" class="btn-primary btn">Back to Groups</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table th {
+        text-align: center;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    tr:hover {
+        opacity: 0.8;
+    }
+
+    .btn-xxs {
+        padding: 0.15rem 0.3rem;
+        font-size: 0.6rem;
+    }
+</style>

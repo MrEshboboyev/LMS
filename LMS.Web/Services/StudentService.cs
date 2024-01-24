@@ -61,7 +61,7 @@ namespace LMS.Web.Services
             });
         }
 
-        public Task<ResponseDto?> GetStudentsByGroupName(string groupName)
+        public Task<ResponseDto?> GetStudentsByGroupNameAsync(string groupName)
         {
             return _baseService.SendAsync(new RequestDto()
             {
