@@ -2,6 +2,7 @@
 using LMS.Services.SubjectAPI.Data;
 using LMS.Services.SubjectAPI.Models;
 using LMS.Services.SubjectAPI.Models.Dto;
+using LMS.Services.SubjectAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Services.SubjectAPI.Controllers
@@ -10,24 +11,36 @@ namespace LMS.Services.SubjectAPI.Controllers
     [ApiController]
     public class SubjectAPIController : ControllerBase
     {
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
+        private readonly ISharedService _sharedService;
         private IMapper _mapper;
         private ResponseDto _response;
         public SubjectAPIController(AppDbContext db,
-            IMapper mapper)
+            IMapper mapper,
+            ISharedService sharedService)
         {
             _db = db;
+            _sharedService = sharedService;
             _mapper = mapper;
             _response = new ResponseDto();
         }
 
         // Get All Entities (Subjects)
         [HttpGet]
-        public ResponseDto Get()
+        public async Task<ResponseDto> Get()
         {
             try
             {
                 IEnumerable<Subject> objList = _db.Subjects.ToList();
+
+                // get all groupSubjects from Shared project
+                IEnumerable<GroupSubjectDto> groupSubjects = await _sharedService.GetGroupSubjects();
+
+                foreach (Subject obj in objList)
+                {
+                    obj.GroupSubjects = groupSubjects.Where(gc => gc.SubjectId == obj.SubjectId).ToList(); ;
+                }
+
                 _response.Result = _mapper.Map<IEnumerable<SubjectDto>>(objList);
             }
             catch (Exception ex)

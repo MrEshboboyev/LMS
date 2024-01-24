@@ -1,4 +1,4 @@
-﻿namespace LMS.Services.GroupAPI.Models.Dto
+﻿namespace LMS.Services.SubjectAPI.Models.Dto
 {
     public class GroupDto
     {

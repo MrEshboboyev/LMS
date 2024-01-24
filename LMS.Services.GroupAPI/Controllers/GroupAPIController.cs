@@ -2,6 +2,7 @@
 using LMS.Services.GroupAPI.Data;
 using LMS.Services.GroupAPI.Models;
 using LMS.Services.GroupAPI.Models.Dto;
+using LMS.Services.GroupAPI.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LMS.Services.GroupAPI.Controllers
@@ -10,24 +11,36 @@ namespace LMS.Services.GroupAPI.Controllers
     [ApiController]
     public class GroupAPIController : ControllerBase
     {
-        private AppDbContext _db;
+        private readonly AppDbContext _db;
+        private readonly ISharedService _sharedService;
         private IMapper _mapper;
         private ResponseDto _response;
         public GroupAPIController(AppDbContext db,
-            IMapper mapper)
+            IMapper mapper,
+            ISharedService sharedService)
         {
             _db = db;
+            _sharedService = sharedService;
             _mapper = mapper;
             _response = new ResponseDto();
         }
 
         // Get All Entities (Groups)
         [HttpGet]
-        public ResponseDto Get()
+        public async Task<ResponseDto> Get()
         {
             try
             {
                 IEnumerable<Group> objList = _db.Groups.ToList();
+
+                // getting groupSubjects from Shared Project
+                IEnumerable<GroupSubjectDto> groupSubjects = await _sharedService.GetGroupSubjects();
+
+                foreach (Group obj in objList)
+                {
+                    obj.GroupSubjects = groupSubjects.Where(gc => gc.GroupId == obj.GroupId).ToList();   
+                }
+
                 _response.Result = _mapper.Map<IEnumerable<GroupDto>>(objList);
             }
             catch (Exception ex)

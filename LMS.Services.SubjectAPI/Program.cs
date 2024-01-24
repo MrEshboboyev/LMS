@@ -1,6 +1,8 @@
 using AutoMapper;
 using LMS.Services.SubjectAPI;
 using LMS.Services.SubjectAPI.Data;
+using LMS.Services.SubjectAPI.Services;
+using LMS.Services.SubjectAPI.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,15 @@ builder.Services.AddDbContext<AppDbContext>(option =>
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+// added services lifetime
+builder.Services.AddScoped<ISharedService, SharedService>();
+
+// add connection : GroupAPI and SharedAPI
+builder.Services.AddHttpClient("Shared", u => u.BaseAddress =
+new Uri(builder.Configuration["ServiceUrls:SharedAPI"]));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

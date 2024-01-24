@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using LMS.Services.SubjectAPI.Models.Dto;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LMS.Services.SubjectAPI.Models
 {
@@ -17,6 +19,9 @@ namespace LMS.Services.SubjectAPI.Models
         // Additional Information
         [Required]
         public int Credits { get; set; }
+
+        [NotMapped]
+        public List<GroupSubjectDto> GroupSubjects { get; set; }
     }
 
 }
