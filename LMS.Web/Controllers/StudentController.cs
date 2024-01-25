@@ -21,7 +21,7 @@ namespace LMS.Web.Controllers
         }
         #endregion
 
-        #region StudentIndex Action
+        #region Index Student
         public async Task<IActionResult> StudentIndex()
         {
             List<StudentDto> students = new();
@@ -39,7 +39,7 @@ namespace LMS.Web.Controllers
         }
         #endregion
 
-        #region Student Create Actions [Get, Post]
+        #region Create Student
         [HttpGet]
         public async Task<IActionResult> StudentCreate()
         {
@@ -67,7 +67,7 @@ namespace LMS.Web.Controllers
 
         #endregion
 
-        #region Student Delete Actions [Get, Post]
+        #region Delete Student
         [HttpGet]
         public async Task<IActionResult> StudentDelete(int id)
         {
@@ -105,7 +105,7 @@ namespace LMS.Web.Controllers
         }
         #endregion
 
-        #region Student Update Actions [Get, Post]
+        #region Update Student
         [HttpGet]
         public async Task<IActionResult> StudentEdit(int id)
         {
@@ -158,7 +158,7 @@ namespace LMS.Web.Controllers
         #endregion
 
 
-        #region Students By Group (!Optimized)
+        #region Students By Group
         [HttpPost]
         public async Task<IActionResult> StudentsByGroupName(string groupName)
         {

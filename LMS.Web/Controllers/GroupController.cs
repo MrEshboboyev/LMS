@@ -7,6 +7,7 @@ namespace LMS.Web.Controllers
 {
     public class GroupController : Controller
     {
+        #region DI 
         // DI for IGroupService
         private readonly IGroupService _groupService;
         private readonly IStudentService _studentService;
@@ -17,6 +18,7 @@ namespace LMS.Web.Controllers
             _studentService = studentService;
             _response = new ResponseDto();
         }
+        #endregion
 
         #region Index Group
         public async Task<IActionResult> GroupIndex()
@@ -213,8 +215,31 @@ namespace LMS.Web.Controllers
 
         #endregion
 
+        #region All Subjects of Group
+
+        [HttpGet]
+        public async Task<IActionResult> GroupSubjects(int id)
+        {
+            List<SubjectDto> subjects = new();
+            _response = await _groupService.GetSubjectsByGroupIdAsync(id);
+            if(_response != null && _response.IsSuccess)
+            {
+                subjects = JsonConvert.DeserializeObject<List<SubjectDto>>(Convert.ToString(_response.Result));
+                ViewBag.Id = id;
+                return View(subjects);
+            }
+            else
+            {
+                TempData["error"] = _response.Message;
+            }
+
+            return View();
+        }
+
+        #endregion
+
         #region Private Tasks
-        
+
         private List<StudentDto> GetStudentByGroupName(string groupName)
         {
             List<StudentDto> students = new();

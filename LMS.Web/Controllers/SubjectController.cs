@@ -7,6 +7,7 @@ namespace LMS.Web.Controllers
 {
     public class SubjectController : Controller
     {
+        #region DI 
         // DI for ISubjectService
         private readonly ISubjectService _subjectService;
         private ResponseDto? _response;
@@ -15,7 +16,9 @@ namespace LMS.Web.Controllers
             _subjectService = subjectService;
             _response = new ResponseDto();
         }
+        #endregion
 
+        #region Index Subject
         public async Task<IActionResult> SubjectIndex()
         {
             List<SubjectDto> subjects = new();  
@@ -31,6 +34,9 @@ namespace LMS.Web.Controllers
 
             return View(subjects);
         }
+        #endregion
+
+        #region Create Subject
 
         [HttpGet]
         public IActionResult SubjectCreate()
@@ -55,6 +61,10 @@ namespace LMS.Web.Controllers
 
             return View(subjects);
         }
+
+        #endregion
+
+        #region Delete Subject
 
         [HttpGet]
         public async Task<IActionResult> SubjectDelete(int id)
@@ -93,6 +103,10 @@ namespace LMS.Web.Controllers
             return View(subjects);
         }
 
+        #endregion
+
+        #region Update Subject
+
         [HttpGet]
         public async Task<IActionResult> SubjectEdit(int id)
         {
@@ -128,5 +142,7 @@ namespace LMS.Web.Controllers
 
             return View(subjects);
         }
+
+        #endregion
     }
 }

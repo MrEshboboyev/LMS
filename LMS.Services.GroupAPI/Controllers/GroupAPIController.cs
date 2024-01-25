@@ -13,17 +13,22 @@ namespace LMS.Services.GroupAPI.Controllers
     {
         private readonly AppDbContext _db;
         private readonly ISharedService _sharedService;
+        private readonly ISubjectService _subjectService;
         private IMapper _mapper;
         private ResponseDto _response;
         public GroupAPIController(AppDbContext db,
             IMapper mapper,
-            ISharedService sharedService)
+            ISharedService sharedService,
+            ISubjectService subjectService)
         {
             _db = db;
             _sharedService = sharedService;
             _mapper = mapper;
             _response = new ResponseDto();
+            _subjectService = subjectService;
         }
+
+        #region Get Group(s)
 
         // Get All Entities (Groups)
         [HttpGet]
@@ -91,6 +96,73 @@ namespace LMS.Services.GroupAPI.Controllers
             return _response;
         }
 
+
+        // getting students by group id
+        [HttpGet]
+        [Route("GetBySubjects/{id}")]
+        public async Task<ResponseDto> GetSubjectByGroupId(int id)
+        {
+            try
+            {
+                // getting groupSubjects from Shared Project
+                IEnumerable<GroupSubjectDto> groupSubjects = await _sharedService.GetGroupSubjects();
+
+                // getting subject ids by group id from groupSubjects
+                Group group = _db.Groups.Find(id);
+                if(group == null)
+                {
+                    throw new Exception("Group Not Found");
+                }
+
+                group.GroupSubjects = new();
+
+
+                // setting subjectId for group
+                foreach(var groupSubject in groupSubjects)
+                {
+                    if(groupSubject.GroupId == id)
+                    {
+                        group.GroupSubjects.Add(new GroupSubjectDto()
+                        {
+                            SubjectId = groupSubject.SubjectId
+                        });
+                    }
+                }
+
+
+                #region Subjects for Sending group
+                List<SubjectDto> sendSubjectList = new();
+
+                // get all Subjects
+                IEnumerable<SubjectDto> subjects = await _subjectService.GetSubjects();
+
+                // setting subjects group.GroupSubject SubjectIds
+                foreach(var groupSubject in group.GroupSubjects)
+                {
+                    foreach(var subject in subjects)
+                    {
+                        if (groupSubject.SubjectId == subject.SubjectId)
+                        {
+                            sendSubjectList.Add(subject);
+                        }
+                    }
+                }    
+
+                #endregion
+
+                _response.Result = _mapper.Map<List<SubjectDto>>(sendSubjectList);  
+            }
+            catch (Exception ex)
+            {
+                _response.Message = ex.Message;
+                _response.IsSuccess = false;
+            }
+
+            return _response;
+        }
+
+        #endregion
+
         // Creating Entity (Group)
         [HttpPost]
         public ResponseDto Post([FromBody] GroupDto groupDto)
@@ -154,5 +226,6 @@ namespace LMS.Services.GroupAPI.Controllers
 
             return _response;
         }
+
     }
 }

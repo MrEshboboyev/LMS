@@ -14,25 +14,7 @@ namespace LMS.Web.Services
             _baseService = baseService;
         }
 
-        public Task<ResponseDto?> CreateSubjectAsync(SubjectDto subjectDto)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.POST,
-                Data = subjectDto,
-                Url = SD.SubjectAPIBase + "/api/subject"
-            });
-        }
-
-        public Task<ResponseDto?> DeleteSubjectAsync(int id)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.DELETE,
-                Url = SD.SubjectAPIBase + "/api/subject/" + id
-            });
-        }
-
+        #region Get Subject(s)
         public Task<ResponseDto?> GetAllSubjectsAsync()
         {
             return _baseService.SendAsync(new RequestDto()
@@ -56,6 +38,26 @@ namespace LMS.Web.Services
             return _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
+                Url = SD.SubjectAPIBase + "/api/subject/" + id
+            });
+        }
+        #endregion
+
+        public Task<ResponseDto?> CreateSubjectAsync(SubjectDto subjectDto)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.POST,
+                Data = subjectDto,
+                Url = SD.SubjectAPIBase + "/api/subject"
+            });
+        }
+
+        public Task<ResponseDto?> DeleteSubjectAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.DELETE,
                 Url = SD.SubjectAPIBase + "/api/subject/" + id
             });
         }

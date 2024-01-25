@@ -20,6 +20,7 @@
                 <tr>
                     <th><i class="fas fa-list"></i> Name</th>
                     <th><i class="fas fa-list"></i> Student</th>
+                    <th><i class="fas fa-list"></i> Subjects</th>
                     <th></th>
                 </tr>
             </thead>
@@ -28,6 +29,7 @@
                 {
                     <tr>
                         <td>@group.Name</td>
+                        @* Student Section of Groups *@
                         <td>
                             <a class="btn btn-primary btn-sm mr-2" asp-action="GroupStudents" asp-route-id="@group.GroupId">
                                 <i class="bi bi-people-fill"></i>
@@ -36,6 +38,13 @@
                                 <i class="bi bi-person-plus-fill"></i>
                             </a>
                         </td>
+                        @* Subject Section of Groups *@
+                        <td>
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="GroupSubjects" asp-route-id="@group.GroupId">
+                                <i class="bi bi-book-fill"></i>
+                            </a>
+                        </td>
+                        @* Buttons Section of Groups *@
                         <td>
                             <a class="btn btn-danger btn-sm" asp-action="GroupDelete" asp-route-id="@group.GroupId">
                                 <i class="bi bi-trash"></i>

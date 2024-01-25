@@ -15,6 +15,40 @@ namespace LMS.Web.Services
             _baseService = baseService;
         }
 
+        #region Get Group(s)
+        public Task<ResponseDto?> GetGroupAsync(string groupName)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.GroupAPIBase + "/api/group/" + $"GetByName/{groupName}"
+            });
+        }
+        public Task<ResponseDto?> GetAllGroupsAsync()
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.GroupAPIBase + "/api/group"
+            });
+        }
+        public Task<ResponseDto?> GetGroupByIdAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.GroupAPIBase + "/api/group/" + id
+            });
+        }
+        public Task<ResponseDto?> GetSubjectsByGroupIdAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.GroupAPIBase + "/api/group/" + $"GetBySubjects/{id}"
+            });
+        }
+        #endregion
         public Task<ResponseDto?> CreateGroupAsync(GroupDto groupDto)
         {
             return _baseService.SendAsync(new RequestDto()
@@ -24,43 +58,6 @@ namespace LMS.Web.Services
                 Url = SD.GroupAPIBase + "/api/group"
             });
         }
-
-        public Task<ResponseDto?> DeleteGroupAsync(int id)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.DELETE,
-                Url = SD.GroupAPIBase + "/api/group/" + id
-            });
-        }
-
-        public Task<ResponseDto?> GetAllGroupsAsync()
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.GroupAPIBase + "/api/group"
-            });
-        }
-
-        public Task<ResponseDto?> GetGroupAsync(string groupName)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.GroupAPIBase + "/api/group/" + $"GetByName/{groupName}"
-            });
-        }
-
-        public Task<ResponseDto?> GetGroupByIdAsync(int id)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.GroupAPIBase + "/api/group/" + id
-            });
-        }
-
         public Task<ResponseDto?> UpdateGroupAsync(GroupDto groupDto)
         {
             return _baseService.SendAsync(new RequestDto()
@@ -70,5 +67,14 @@ namespace LMS.Web.Services
                 Url = SD.GroupAPIBase + "/api/group"
             });
         }
+        public Task<ResponseDto?> DeleteGroupAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.DELETE,
+                Url = SD.GroupAPIBase + "/api/group/" + id
+            });
+        }
+
     }
 }

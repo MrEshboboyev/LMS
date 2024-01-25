@@ -15,6 +15,44 @@ namespace LMS.Web.Services
             _baseService = baseService;
         }
 
+        #region Get Student(s)
+        public Task<ResponseDto?> GetStudentAsync(string studentName)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.StudentAPIBase + "/api/student/" + $"GetByName/{studentName}"
+            });
+        }
+
+        public Task<ResponseDto?> GetAllStudentsAsync()
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.StudentAPIBase + "/api/student"
+            });
+        }
+        
+        public Task<ResponseDto?> GetStudentByIdAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.StudentAPIBase + "/api/student/" + id
+            });
+        }
+
+        public Task<ResponseDto?> GetStudentsByGroupNameAsync(string groupName)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.StudentAPIBase + "/api/student/" + $"GetStudentsByGroupName/{groupName}"
+            });
+        }
+        #endregion
+
         public Task<ResponseDto?> CreateStudentAsync(StudentDto studentDto)
         {
             return _baseService.SendAsync(new RequestDto()
@@ -31,42 +69,6 @@ namespace LMS.Web.Services
             {
                 ApiType = ApiType.DELETE,
                 Url = SD.StudentAPIBase + "/api/student/" + id
-            });
-        }
-
-        public Task<ResponseDto?> GetAllStudentsAsync()
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.StudentAPIBase + "/api/student"
-            });
-        }
-
-        public Task<ResponseDto?> GetStudentAsync(string studentName)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.StudentAPIBase + "/api/student/" + $"GetByName/{studentName}"
-            });
-        }
-
-        public Task<ResponseDto?> GetStudentByIdAsync(int id)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.StudentAPIBase + "/api/student/" + id
-            });
-        }
-
-        public Task<ResponseDto?> GetStudentsByGroupNameAsync(string groupName)
-        {
-            return _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = ApiType.GET,
-                Url = SD.StudentAPIBase + "/api/student/" + $"GetStudentsByGroupName/{groupName}"
             });
         }
 

@@ -22,10 +22,15 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 // added services lifetime
 builder.Services.AddScoped<ISharedService, SharedService>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 
 // add connection : GroupAPI and SharedAPI
 builder.Services.AddHttpClient("Shared", u => u.BaseAddress =
 new Uri(builder.Configuration["ServiceUrls:SharedAPI"]));
+
+// add connection : GroupAPI and SubjectAPI
+builder.Services.AddHttpClient("Subject", u => u.BaseAddress =
+new Uri(builder.Configuration["ServiceUrls:SubjectAPI"]));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
