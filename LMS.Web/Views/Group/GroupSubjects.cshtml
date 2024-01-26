@@ -15,7 +15,6 @@
                     <th><i class="fas fa-list"></i> Name</th>
                     <th><i class="fas fa-list"></i> Code</th>
                     <th><i class="fas fa-list"></i> Credits</th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -25,14 +24,6 @@
                         <td>@subject.Name</td>
                         <td>@subject.Code</td>
                         <td>@subject.Credits</td>
-                        <td>
-                            <a class="btn btn-danger btn-sm" asp-action="SubjectDelete" asp-route-id="@subject.SubjectId">
-                                <i class="bi bi-trash"></i>
-                            </a>
-                            <a class="btn btn-primary btn-sm mr-2" asp-action="SubjectEdit" asp-route-id="@subject.SubjectId">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
-                        </td>
                     </tr>
                 }
             </tbody>

@@ -154,7 +154,6 @@ namespace LMS.Web.Controllers
             if(_response != null && _response.IsSuccess)
             {
                 groups = JsonConvert.DeserializeObject<List<GroupDto>>(Convert.ToString(_response.Result));
-                TempData["success"] = "Get Groups successful!";
                 return View(groups);
             }
             else
