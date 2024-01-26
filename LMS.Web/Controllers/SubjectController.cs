@@ -154,6 +154,7 @@ namespace LMS.Web.Controllers
             if(_response != null && _response.IsSuccess)
             {
                 groups = JsonConvert.DeserializeObject<List<GroupDto>>(Convert.ToString(_response.Result));
+                ViewBag.Subject = await GetSubjectAsync(id);
                 return View(groups);
             }
             else
@@ -162,6 +163,28 @@ namespace LMS.Web.Controllers
             }
 
             return View();
+        }
+
+        #endregion
+
+        #region Private Tasks
+
+        // Get Subject By Id
+        private async Task<SubjectDto> GetSubjectAsync(int id)
+        {
+            SubjectDto subject = new();
+            _response = await _subjectService.GetSubjectByIdAsync(id);
+            if (_response != null && _response.IsSuccess)
+            {
+                subject = JsonConvert.DeserializeObject<SubjectDto>(Convert.ToString(_response.Result));
+                return subject;
+            }
+            else
+            {
+                TempData["error"] = _response.Message;
+            }
+
+            return new SubjectDto();
         }
 
         #endregion

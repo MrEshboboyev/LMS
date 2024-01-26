@@ -194,6 +194,34 @@ namespace LMS.Web.Controllers
         }
         #endregion
 
+        #region Get Student Subjects
+
+        [HttpGet]
+        public async Task<IActionResult> StudentSubjects(int id)
+        {
+            List<SubjectDto> subjects = new();
+            StudentDto student = new();
+            _response = await _studentService.GetStudentByIdAsync(id);
+            if(_response != null && _response.IsSuccess)
+            {
+                student = JsonConvert.DeserializeObject<StudentDto>(Convert.ToString(_response.Result));
+                _response = await _groupService.GetSubjectsByGroupIdAsync(student.GroupId);
+                if (_response != null && _response.IsSuccess)
+                {
+                    subjects = JsonConvert.DeserializeObject<List<SubjectDto>>(Convert.ToString(_response.Result));
+                    return View(subjects);
+                }
+            }
+            else
+            {
+                TempData["error"] = _response.Message;
+            }
+
+            return View();
+        }
+
+        #endregion
+
         #region Private Tasks
         private async Task PrepareGroupsDropdown()
         {

@@ -23,20 +23,27 @@
                 <tr>
                     <th><i class="fas fa-list"></i> Name</th>
                     <th><i class="fas fa-list"></i> Group</th>
+                    <th><i class="fas fa-list"></i> Subjects</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var group in Model)
+                @foreach (var student in Model)
                 {
                     <tr>
-                        <td>@group.Name</td>
-                        <td>@group.Group.Name</td>
+                        <td>@student.Name</td>
+                        <td>@student.Group.Name</td>
+                        @* Subject Section of Student *@
                         <td>
-                            <a class="btn btn-danger btn-sm" asp-action="StudentDelete" asp-route-id="@group.StudentId">
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="StudentSubjects" asp-route-id="@student.StudentId">
+                                <i class="bi bi-book-fill"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger btn-sm" asp-action="StudentDelete" asp-route-id="@student.StudentId">
                                 <i class="bi bi-trash"></i>
                             </a>
-                            <a class="btn btn-primary btn-sm mr-2" asp-action="StudentEdit" asp-route-id="@group.StudentId">
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="StudentEdit" asp-route-id="@student.StudentId">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
                         </td>
