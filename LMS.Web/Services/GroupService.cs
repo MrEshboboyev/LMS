@@ -45,7 +45,7 @@ namespace LMS.Web.Services
             return _baseService.SendAsync(new RequestDto()
             {
                 ApiType = ApiType.GET,
-                Url = SD.GroupAPIBase + "/api/group/" + $"GetBySubjects/{id}"
+                Url = SD.GroupAPIBase + "/api/group/" + $"GetSubjectsByGroup/{id}"
             });
         }
         #endregion

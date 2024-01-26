@@ -99,8 +99,8 @@ namespace LMS.Services.GroupAPI.Controllers
 
         // getting students by group id
         [HttpGet]
-        [Route("GetBySubjects/{id}")]
-        public async Task<ResponseDto> GetSubjectByGroupId(int id)
+        [Route("GetSubjectsByGroup/{id}")]
+        public async Task<ResponseDto> GetSubjectsByGroupId(int id)
         {
             try
             {
