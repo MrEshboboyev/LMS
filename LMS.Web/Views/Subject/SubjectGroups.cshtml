@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GroupDto>
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Groups List</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <table class="table table-bordered table-hover table-primary">
+            <thead>
+                <tr>
+                    <th><i class="fas fa-list"></i> Name</th>
+                    <th><i class="fas fa-list"></i> Student</th>
+                    <th><i class="fas fa-list"></i> Subjects</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var group in Model)
+                {
+                    <tr>
+                        <td>@group.Name</td>
+                        @* Student Section of Groups *@
+                        <td>
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="GroupStudents" asp-route-id="@group.GroupId">
+                                <i class="bi bi-people-fill"></i>
+                            </a>
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="GroupAddStudent" asp-route-id="@group.GroupId">
+                                <i class="bi bi-person-plus-fill"></i>
+                            </a>
+                        </td>
+                        @* Subject Section of Groups *@
+                        <td>
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="GroupSubjects" asp-route-id="@group.GroupId">
+                                <i class="bi bi-book-fill"></i>
+                            </a>
+                        </td>
+                        @* Buttons Section of Groups *@
+                        <td>
+                            <a class="btn btn-danger btn-sm" asp-action="GroupDelete" asp-route-id="@group.GroupId">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                            <a class="btn btn-primary btn-sm mr-2" asp-action="GroupEdit" asp-route-id="@group.GroupId">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        @* buttons section *@
+
+        <div class="row pb-3">
+            <div class="col-6">
+                <a asp-action="SubjectIndex" class="btn btn-primary"><i class="bi bi-plus-square"></i> Back to Subjects</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    tr:hover {
+        opacity: 0.8;
+    }
+</style>

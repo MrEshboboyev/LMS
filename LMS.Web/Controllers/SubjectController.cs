@@ -144,5 +144,27 @@ namespace LMS.Web.Controllers
         }
 
         #endregion
+
+        #region All Groups Of Subject
+        
+        public async Task<IActionResult> SubjectGroups(int id)
+        {
+            List<GroupDto> groups = new();
+            _response = await _subjectService.GetGroupsBySubjectIdAsync(id);
+            if(_response != null && _response.IsSuccess)
+            {
+                groups = JsonConvert.DeserializeObject<List<GroupDto>>(Convert.ToString(_response.Result));
+                TempData["success"] = "Get Groups successful!";
+                return View(groups);
+            }
+            else
+            {
+                TempData["error"] = _response.Message;
+            }
+
+            return View();
+        }
+
+        #endregion
     }
 }

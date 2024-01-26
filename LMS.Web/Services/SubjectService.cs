@@ -41,6 +41,14 @@ namespace LMS.Web.Services
                 Url = SD.SubjectAPIBase + "/api/subject/" + id
             });
         }
+        public Task<ResponseDto?> GetGroupsBySubjectIdAsync(int id)
+        {
+            return _baseService.SendAsync(new RequestDto()
+            {
+                ApiType = ApiType.GET,
+                Url = SD.SubjectAPIBase + "/api/subject/" + $"GetGroupsBySubject/{id}"
+            });
+        }
         #endregion
 
         public Task<ResponseDto?> CreateSubjectAsync(SubjectDto subjectDto)

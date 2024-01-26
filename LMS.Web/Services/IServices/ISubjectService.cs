@@ -8,6 +8,7 @@ namespace LMS.Web.Services.IServices
         Task<ResponseDto?> GetSubjectAsync(string subjectName);
         Task<ResponseDto?> GetAllSubjectsAsync();
         Task<ResponseDto?> GetSubjectByIdAsync(int id);
+        Task<ResponseDto?> GetGroupsBySubjectIdAsync(int id);
         #endregion
         Task<ResponseDto?> CreateSubjectAsync(SubjectDto subjectDto);
         Task<ResponseDto?> UpdateSubjectAsync(SubjectDto subjectDto);
